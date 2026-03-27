@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#050505">
+    <link rel="apple-touch-icon" href="https://placehold.co/192x192/1a1a1a/3b82f6?text=App">
+    
+    <title>NimeStream</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+        <img src="295a6dc7f4efe03269d55d35a91668d3.jpg" alt="Logo Web" class="top-logo">
+        <div class="top-search-bar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="searchInput" placeholder="Search...">
+            <button onclick="handleSearch()" class="search-text-btn">Search</button>
+        </div>
+
+        <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+    </nav>
+
+    <main id="app">
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Memuat Anime...</p>
+        </div>
+        
+        <div id="home-view"></div>
+
+        <div id="anime-view" class="hidden">
+            <div style="padding: 0 20px; margin-top: 10px;">
+                <h1 class="page-title">Kategori Anime</h1>
+                <div class="genre-grid" id="genre-grid"></div>
+            </div>
+            <div id="category-results-container" class="search-results-container"></div>
+        </div>
+
+        <div id="recent-view" class="hidden">
+            <div style="padding: 0 20px; margin-top: 10px;">
+                <h1 class="page-title">Riwayat Tontonan</h1>
+            </div>
+            <div id="recent-results-container" class="search-results-container"></div>
+        </div>
+
+        <div id="favorite-view" class="hidden">
+            <div style="padding: 0 20px; margin-top: 10px;">
+                <h1 class="page-title">Anime Favorit</h1>
+            </div>
+            <div id="favorite-results-container" class="search-results-container"></div>
+        </div>
+
+        <div id="developer-view" class="hidden">
+            <div class="social-profile-container">
+                
+                <div class="social-banner">
+                    <img src="39bb9eff586fe9ebdf7a0c3dba1d18a8.jpg-dan™Studio.png" alt="Banner">
+                </div>
+                
+                <div class="social-profile-header">
+                    <div class="social-avatar-wrapper">
+                        <img src="295a6dc7f4efe03269d55d35a91668d3.jpg" alt="Profile" class="social-avatar">
+                    </div>
+                    <a href="https://chat.whatsapp.com/KRBi9vbAlRSHA3oW8LxRKx?mode=gi_t" target="_blank" class="social-follow-btn">-</a>
+                </div>
+                
+                <div class="social-info">
+                    <div class="social-name-wrapper">
+                        <h2 class="social-name">Aziz</h2>
+                        <svg class="verified-badge" width="18" height="18" viewBox="0 0 24 24" fill="#3b82f6"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
+                    </div>
+                    <p class="social-handle">Aziz</p>
+                    
+                    <p class="social-bio">Official Developer of NimeStream 2026. Merancang pengalaman streaming Web App modern yang responsif.</p>
+                    
+                    <div class="social-stats">
+                        <div class="stat-item"><span class="stat-num">-</span> <span class="stat-label">Following</span></div>
+                        <div class="stat-item"><span class="stat-num" id="wa-follower-count">Memuat...</span> <span class="stat-label">Followers</span></div>
+                    </div>
+                </div>
+                
+                <div class="social-tabs">
+                    <div class="social-tab active">Dokumentasi</div>
+                    <div class="social-tab">Teknologi</div>
+                </div>
+                
+                <div class="social-content">
+                    <div class="doc-card">
+                        <h4>Tentang NimeStream</h4>
+                        <p>Web App Streaming Anime resolusi HD tanpa iklan pop-up mengganggu. Didesain dengan standar PWA (Progressive Web App) eksklusif tahun 2026 yang dapat diinstal langsung di perangkat mobile.</p>
+                    </div>
+                    <div class="doc-card">
+                        <h4>Fitur Unggulan</h4>
+                        <p>Menggunakan IndexedDB untuk penyimpanan riwayat tontonan dan favorit secara lokal dengan aman. dan real-time fetching data.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="detail-view" class="hidden">
+            <div class="nav-back">
+                <button onclick="goHome()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Kembali
+                </button>
+            </div>
+            
+            <div id="anime-info"></div>
+            <div id="episode-header-container"></div>
+            <div class="episode-grid" id="episode-grid"></div>
+        </div>
+
+        <div id="watch-view" class="hidden">
+            <div class="nav-back">
+                <button onclick="backToDetail()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    List Episode
+                </button>
+            </div>
+            
+            <div class="video-wrapper">
+                <iframe id="video-player" src="" allowfullscreen></iframe>
+            </div>
+            
+            <h2 id="video-title" class="video-main-title"></h2>
+            <div class="server-label">Pilih Server:</div>
+            <div class="server-list" id="server-options"></div>
+        </div>
+    </main>
+
+    <nav class="bottom-nav" id="bottomNav">
+        <button class="nav-item active" onclick="switchTab('home')" id="tab-home">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>Home</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('anime')" id="tab-anime">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span>Anime</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('recent')" id="tab-recent">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Recent</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('favorite')" id="tab-favorite">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            <span>Favorite</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('developer')" id="tab-developer">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>Developer</span>
+        </button>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>
